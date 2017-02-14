@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>MathJax Editor</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/themes/prism.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</head>
+<body>
+  <script type='text/x-mathjax-config'>
+    MathJax.Hub.Config({
+      showMathMenu: false,
+      messageStyle: 'none'
+    });
+  </script>
+
+  <div class="container">
+    <header>
+      <h1 class="isCentered">MathJax Editor</h1>
+      <p class="isCentered">A Mathematics editor on top of <a href="https://mathjax.org">MathJax</a>.</p>
+    </header>
+
+    <textarea id="myEditor"></textarea>
+
+    <hr>
+      <nav>
+        <a href="#installation">Installation</a>
+        <a href="#usage">Usage</a>
+        <a href="#options">Options</a>
+        <a href="#api">API</a>
+        <a href="https://github.com/ianlucas/mathjax-editor">Github</a>
+      </nav>
+    <hr>
+
+    <h2 id="installation">Installation</h2>
+
+    <p>You can install it through npm, or Yarn:</p>
+    <p><code>npm <strong>install</strong> mathjax-editor</code> <span class="or">or</span> <code>yarn <strong>add</strong> mathjax-editor</code></p>
+
+    <p>Also you can just include <a href="https://github.com/ianlucas/mathjax-editor/blob/master/dist/MathJaxEditor.js">MathJaxEditor.js</a> file.</p>
+
+    <hr>
+
+    <h2 id="usage">Usage</h2>
+
+    <p>First, you need to define a textarea.</p>
+
+    <pre><code class="language-html">&lt;textarea id=&quot;myEditor&quot;&gt;&lt;/textarea&gt;</code></pre>
+
+    <p>Then, instantiate a new MathJax Editor.</p>
+
+<pre><code class="language-javascript">const editor = new MathJaxEditor({
+  el: '#myEditor' // or document.getElementById('myEditor')
+});</code></pre>
+
+    <p>Now you are done!</p>
+
+    <hr>
+
+    <h2 id="options">Options</h2>
+
+    <p>MathJax Editor accepts an options object as first argument. These are the avaialable properties:</p>
+
+    <h3><code>options.el</code></h3>
+
+    <p>This option is <strong>required</strong>. <code>el</code> is the target <code>textarea</code> that will be replaced with MathJax Editor's input. It can be a selector string or a DOM Element.</p>
+
+    <h3><code>options.newLine</code></h3>
+
+    <p>Enable new line insertion. Default is <strong><code>false</code></strong></p>
+
+    <h3><code>options.scroll</code></h3>
+
+    <p>Enable scroll to display element. Default is <strong><code>false</code></strong>, so the display <code>display-x</code> is <code>hidden</code>.</p>
+
+    <h3><code>options.value</code></h3>
+
+    <p>Set the initial editor value.</p>
+
+    <hr>
+
+    <h2 id="api">API</h2>
+
+    <h3><code>editor.insert(char)</code></h3>
+
+    <p>This insert a character at cursor position. The allowed characters are numbers (<code>0</code> to <code>9</code>), and variables (<code>a</code> to <code>z</code>).</p>
+
+    <h3><code>editor.insertSymbol(symbol)</code></h3>
+
+    <p>This insert a symbol at cursor position. Currently supported symbols: <code>'+', '-', '=', '<', '>', ',', '.', ':', ';', '?', '(', ')', '[', ']', '|', '%'</code>.</p>
+
+    <h3><code>editor.insertCommand(command[, blockCount = 0, brackets = false])</code></h3>
+
+    <p>This inserts a command into the editor. blockCount is the quantity of blocks (<code>{}</code>) the command requires (e.q. <code>\sqrt</code> requires 1, and <code>\frac</code> requires 2). Tested commands: Greek symbols, <code>\sqrt, \frac, \geq, \leq, \pm.</code></p>
+
+    <h3><code>editor.moveCursorLeft()</code></h3>
+
+    <p>This will move the cursor to the left.</p>
+
+    <h3><code>editor.moveCursorRight()</h3></code>
+
+    <p>This will move the cursor to the right.</p>
+
+    <h3><code>editor.erase()</h3></code>
+
+    <p>This will erase the character before the cursor.</p>
+
+    <h3><code>editor.focus()</h3></code>
+
+    <p>Focus the editor.</p>
+
+    <h3><code>editor.blur()</h3></code>
+
+    <p>Blur the editor.</p>
+
+    <h3><code>editor.on(type, listener)</h3></code>
+
+    <p>Listen to a editor event. Currently available: focus, and blur.</p>
+
+    <h3><code>editor.getValue()</h3></code>
+
+    <p>Get the editor's value.</p>
+  </div>
+
+  <script src="scripts.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/prism.min.js"></script>
+  <script src="https://rawgit.com/ianlucas/mathjax-editor/master/dist/MathJaxEditor.min.js"></script>
+</body>
+</html>
