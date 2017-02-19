@@ -48,6 +48,11 @@ nav a {
   margin: 0 1em;
 }
 
+blockquote {
+  background-color: #e6e6e6;
+  text-align: center;
+}
+
 .container {
   margin: 2em auto;
   min-width: 320px;
