@@ -19,6 +19,11 @@ pre, code {
   padding: 0.5em 0;
 }
 
+a {
+  color: #007fff;
+  text-decoration: none;
+}
+
 #header {
   color: #9c0063;
   font-size: 128px;
