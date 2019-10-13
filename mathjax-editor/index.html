@@ -4,219 +4,872 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>MathJax Editor</title>
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700,700i" rel="stylesheet">
+  <title>mje</title>
+  <link href="https://fonts.googleapis.com/css?family=Nunito:400,700" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/themes/prism.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="mje.css">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <main class="wrapper">
-    <header class="header">
-      <h1 class="header-title">
-        MathJax Editor
-        <a class="github-button" href="https://github.com/ianlucas/mathjax-editor" data-size="large" data-show-count="true" aria-label="Star ianlucas/mathjax-editor on GitHub">Star</a>
-      </h1>
-      <textarea id="editor"></textarea>
-    </header>
-    <article>
-      <h2>Getting Started</h2>
-      <p>
-        First, you will need to add <a href="//mathjax.org">MathJax</a> to your page, then 
-        add <a href="https://github.com/ianlucas/mathjax-editor/blob/next/dist/MathJaxEditor.js">MathJax Editor file</a> or install it via npm:
-      </p>
-      <pre class="npm"><code>npm <strong>install</strong> mathjax-editor</code></pre>
-      <p>
-        MathJax Editor was tested on Chrome, Firefox and Internet Explorer 9 with <a href="https://babeljs.io/docs/usage/polyfill/">babel-polyfill</a>.
-      </p>
-    </article>
-    <article>
-      <h2>Usage</h2>
-      <p>
-        Put a <code>&lt;textarea&gt;</code> where the editor should be placed, like this:
-      </p>
-<pre><code class="language-markup">&lt;textarea id="myEditor"&gt;&lt;/textarea&gt;</code></pre>
-      <p>Then, instantiate the editor:</p>
-<pre><code class="language-javascript">const editor = new MathJaxEditor('#myEditor')
-</code></pre>
-    </article>
-    <article>
-      <h2>Styling the Editor</h2>
-      <p>
-        To style the display, just use the <code>.mathjax-editor-display</code> selector.
-        To style the caret, use the <code>.mathjax-editor-caret</code> selector.
-      </p>
-    </article>
-    <article>
-      <h2>The API</h2>
+  <h1 id="header">mathjax-editor</h1>
+  <section id="equation-wrapper">
+    <div id="myEquation"></div>
+  </section>
+  <section>Try typing above! <img class="upwards" src="upwards.svg"></section>
+  <section>
+    <h2>Usage</h2>
+    <p>1. Ensure <a href="https://www.mathjax.org/">MathJax</a> is loaded in your application.</p>
+    <p>2. Add the mje.js file to your application (module coming soon):</p>
+    <pre><code class="language-html">&#x3C;script src=&#x22;https://cdn.jsdelivr.net/gh/ianlucas/mathjax-editor/dist/mathjax-editor.js?v=3&#x22;&#x3E;&#x3C;/script&#x3E;</pre></code>
+    <p>3. Use a target element to create the editor:</p>
+    <pre><code class="language-html">&#x3C;input id=&#x22;target&#x22;&#x3E;
 
-      <h3><em>new</em> MathJaxEditor(selectors[, options])</h3>
-      <ul>
-        <li>
-          <strong>selectors</strong> refer to the <code>&lt;textarea&gt;</code> that the editor will
-          replace. It can be a selector string or a HTML Element.
-        </li>
-        <li>
-          <strong>options</strong> is an object to configure the editor, it is optional.
-          <ul>
-            <li><strong><em>options.allowNewlines</em></strong> allows the insertion of newlines. (Default is <code>false</code>).</li>
-            <li><strong><em>options.placeholder</em></strong> placeholder string when editor is empty. (Default is <code>"Start typing..."</code>).</li>
-          </ul>
-        </li>
-      </ul>
-      
-      <hr>
+&#x3C;script&#x3E;
+  const editor = mathJaxEditor(&#x27;#target&#x27;)
+&#x3C;/script&#x3E;</pre></code>
+  </section>
+  <section>
+    <h2>API</h2>
+    <section class="api-container">
+      <section class="api-column">
+        <h3>editor.raw()</h3>
+        <p>Get editor current value as a HTMLElement.</p>
 
-      <h3><em>editor</em>.backspaceRemove()</h3>
-      <p>Perform a "backspace" deletion in the editor.</p>
+        <h3>editor.get()</h3>
+        <p>Get editor current value as a string.</p>
 
-      <hr>
-      
-      <h3><em>editor</em>.deleteRemove()</h3>
-      <p>Perform a "delete" deletion in the editor.</p>
+        <h3>editor.set(value: String)</h3>
+        <p>Set editor current value.</p>
 
-      <hr>
-      
-      <h3><em>editor</em>.destroy()</h3>
-      <p>Remove the editor element and event listeners.</p>
+        <h3>editor.readonly(value: Boolean)</h3>
+        <p>Define whether the editor is readonly.</p>
 
-      <hr>
+        <h3>editor.left()</h3>
+        <p>Move the cursor to the left.</p>
 
-      <h3><em>editor</em>.focus()</h3>
-      <p>Focus the editor.</p>
+        <h3>editor.right()</h3>
+        <p>Move the cursor to the left.</p>
 
-      <hr>
+        <h3>editor.del()</h3>
+        <p>Apply a delete in the current position.</p>
 
-      <h3><em>editor</em>.getValue()</h3>
-      <p>Get the editor value as a <code>&lt;math&gt;</code> HTML Element.</p>
+        <h3>editor.backspace()</h3>
+        <p>Apply a backspace in the current position.</p>
+      </section>
+      <section class="api-column">
+        <h3>editor.number(n: String|Number)</h3>
+        <p>Insert a number in the current position.</p>
+        <p><strong>n</strong> — number to be inserted, e.q. <code>1</code>, <code>2</code>, ...</p>
 
-      <hr>
+        <h3>editor.identifier(c: String)</h3>
+        <p>Insert an identifier in the current position.</p>
+        <p><strong>c</strong> — identifier to be inserted, e.q. <code>α</code>, <code>β</code>, ...</p>
 
-      <h3><em>editor</em>.insertNumber(n)</h3>
-      <p>Insert a number in the editor.</p>
-      <ul>
-        <li>
-          <strong>n</strong> is the number 0 or up to 9.
-        </li>
-      </ul>
-      
-      <hr>
+        <h3>editor.operator(c: String)</h3>
+        <p>Insert an operator in the current position.</p>
+        <p><strong>c</strong> — operator to be inserted, e.q. <code>⊂</code>, <code>⊃</code>, ...</p>
+      </section>
+      <section class="api-column">
+        <h3>editor.sqrt()</h3>
+        <p>Insert a square root in the current position.</p>
 
-      <h3><em>editor</em>.insertIdentifier(i)</h3>
-      <p>Insert an identifier in the editor.</p>
-      <ul>
-        <li>
-          <strong>i</strong> is the identifier string. See the <a href="#identifier-list">list of identifiers</a>.
-        </li>
-      </ul>
+        <h3>editor.frac()</h3>
+        <p>Insert a fraction in the current position.</p>
 
-      <hr>
+        <h3>editor.root()</h3>
+        <p>Insert a root in the current position.</p>
 
-      <h3><em>editor</em>.insertOperator(o)</h3>
-      <p>Insert an operator in the editor.</p>
-      <ul>
-        <li>
-          <strong>o</strong> is the operator string. See the <a href="#operator-list">list of operators</a>.
-        </li>
-      </ul>
+        <h3>editor.sup()</h3>
+        <p>Insert a superscript in the current position.</p>
 
-      <hr>
+        <h3>editor.sub()</h3>
+        <p>Insert a subscript in the current position.</p>
 
-      <h3><em>editor</em>.insertFraction()</h3>
-      <p>Insert a fraction in the editor.</p>
-      
-      <hr>
-      
-      <h3><em>editor</em>.insertSqrt()</h3>
-      <p>Insert a square root in the editor.</p>
-
-      <hr>
-      
-      <h3><em>editor</em>.insertRoot()</h3>
-      <p>Insert a nth root in the editor.</p>
-
-      <hr>
-      
-      <h3><em>editor</em>.insertSuperscript()</h3>
-      <p>Insert a superscript in the editor.</p>
-
-      <hr>
-      
-      <h3><em>editor</em>.insertSubscript()</h3>
-      <p>Insert a subscript in the editor.</p>
-
-      <hr>
-      
-      <h3><em>editor</em>.insertNewline()</h3>
-      <p>Insert a newline in the editor.</p>
-
-      <hr>
-      
-      <h3><em>editor</em>.moveCursorLeft()</h3>
-      <p>Move the cursor to the left.</p>
-
-      <hr>
-      
-      <h3><em>editor</em>.moveCursorRight()</h3>
-      <p>Move the cursor to the right.</p>
-
-      <hr>
-      
-      <h3><em>editor</em>.on(type, listener)</h3>
-      <p>Listen to an editor event. Currently available: <code>update</code>, <code>focus</code> and <code>blur</code>.</p>
-      <ul>
-        <li>
-          <strong>type</strong> is the name of the event to be listened.
-        </li>
-        <li>
-          <strong>listener</strong> is the function that will be called when the event is emitted.
-        </li>
-      </ul>
-
-      <hr>
-      
-      <h3><em>editor</em>.setValue($value)</h3>
-      <p>Set the value of the editor.</p>
-      <ul>
-        <li>
-          <strong>$value</strong> is the new MathML markup string or <code>&lt;math&gt;</code> HTML Element.
-        </li>
-      </ul>
-      
-      <hr>
-      
-      <h3><em>editor</em>.toString()</h3>
-      <p>Get the value of the editor as MathML string.</p>
-
-      <hr>
-      
-      <h3><em>editor</em>.toTex()</h3>
-      <p>Get the value of the editor as a Tex string. (Pretty experimental, but should work.)</p>
-    </article>
-    <article>
-      <h2 id="identifier-list">Identifier List</h2>
-      <p>
-        Besides alphabetical characters, these identifiers are also usable: <code>\sin</code>, <code>\cos</code>, <code>\tan</code>, <code>\cot</code>, <code>\arcsin</code>, <code>\arccos</code>, <code>\arctan</code>, <code>\arccot</code>, <code>\sinh</code>, <code>\cosh</code>, <code>\tanh</code>, <code>\coth</code>, <code>\sec</code>, <code>\csc</code>, <code>\alpha</code>, <code>\beta</code>, <code>\gamma</code>, <code>\Gamma</code>, <code>\delta</code>, <code>\Delta</code>, <code>\epsilon</code>, <code>\varepsilon</code>, <code>\zeta</code>, <code>\eta</code>, <code>\theta</code>, <code>\vartheta</code>, <code>\Theta</code>, <code>\iota</code>, <code>\kappa</code>, <code>\Lambda</code>, <code>\lambda</code>, <code>\mu</code>, <code>\nu</code>, <code>\xi</code>, <code>\Xi</code>, <code>\pi</code>, <code>\Pi</code>, <code>\rho</code>, <code>\varrho</code>, <code>\sigma</code>, <code>\Sigma</code>, <code>\tau</code>, <code>\upsilon</code>, <code>\Upsilon</code>, <code>\phi</code>, <code>\varphi</code>, <code>\Phi</code>, <code>\chi</code>, <code>\psi</code>, <code>\Psi</code>, <code>\omega</code>, <code>\Omega</code>, <code>\partial</code>, <code>\eth</code>, <code>\hbar</code>, <code>\imath</code>, <code>\jmath</code>, <code>\ell</code>, <code>\Re</code>, <code>\Im</code>, <code>\wp</code>, <code>\nabla</code>, <code>\infty</code>, <code>\aleph</code>, <code>\beth</code>, and <code>\gimel</code>.
-      </p>
-    </article>
-    <article>
-      <h2 id="operator-list">Operators List</h2>
-      <p>
-        These are the allowed operators: <code>+</code>, <code>-</code>, <code>=</code>, <code><</code>, <code>></code>, <code>|</code>, <code>%</code>, <code>,</code>, <code>.</code>, <code>$</code>, <code>(</code>, <code>)</code>, <code>[</code>, <code>]</code>, <code>!</code>, <code>\leq</code>, <code>\geq</code>, <code>\ll</code>, <code>\gg</code>, <code>\subset</code>, <code>\supset</code>, <code>\subseteq</code>, <code>\supseteq</code>, <code>\nsubseteq</code>, <code>\nsupseteq</code>, <code>\sqsubset</code>, <code>\sqsupset</code>, <code>\sqsubseteq</code>, <code>\sqsupseteq</code>, <code>\preceq</code>, <code>\succeq</code>, <code>\doteq</code>, <code>\equiv</code>, <code>\approx</code>, <code>\cong</code>, <code>\simeq</code>, <code>\sim</code>, <code>\propto</code>, <code>\neq</code>, <code>\parallel</code>, <code>\asymp</code>, <code>\vdash</code>, <code>\in</code>, <code>\smile</code>, <code>\models</code>, <code>\perp</code>, <code>\prec</code>, <code>\sphericalangle</code>, <code>\nparallel</code>, <code>\bowtie</code>, <code>\dashv</code>, <code>\ni</code>, <code>\frown</code>, <code>\notin</code>, <code>\mid</code>, <code>\succ</code>, <code>\measuredangle</code>, <code>\pm</code>, <code>\div</code>, <code>\times</code>, <code>\cdot</code>, <code>\mp</code>, <code>\ast</code>, <code>\star</code>, <code>\dagger</code>, <code>\ddagger</code>, <code>\cap</code>, <code>\cup</code>, <code>\uplus</code>, <code>\sqcap</code>, <code>\sqcup</code>, <code>\vee</code>, <code>\wedge</code>, <code>\diamond</code>, <code>\bigtriangleup</code>, <code>\bigtriangledown</code>, <code>\triangleleft</code>, <code>\triangleright</code>, <code>\bigcirc</code>, <code>\bullet</code>, <code>\wr</code>, <code>\oplus</code>, <code>\ominus</code>, <code>\otimes</code>, <code>\odot</code>, <code>\circ</code>, <code>\setminus</code>, <code>\amalg</code>, <code>\exists</code>, <code>\nexists</code>, <code>\forall</code>, <code>\neg</code>, <code>\land</code>, <code>\lor</code>, <code>\rightarrow</code>, <code>\leftarrow</code>, <code>\mapsto</code>, <code>\implies</code>, <code>\Rightarrow</code>, <code>\leftrightarrow</code>, <code>\iff</code>, <code>\Leftrightarrow</code>, <code>\top</code>, <code>\bot</code>, <code>\emptyset</code>, <code>\varnothing</code>, <code>\{</code>, <code>\uparrow</code>, <code>\downarrow</code>, <code>\|</code>, <code>\}</code>, <code>\Uparrow</code>, <code>\Downarrow</code>, <code>/</code>, <code>\angle</code>, <code>\lceil</code>, <code>\lfloor</code>, <code>\backslash</code>, <code>\rangle</code>, <code>\rceil</code>, and <code>\rfloor</code>.
-      </p>
-    </article>
-  </main>
-
+        <h3>editor.subsup()</h3>
+        <p>Insert a superscript and superscript in the current position.</p>
+      </section>
+    </section>
+  </section>
+  <section>
+    <h2>Useful Tables</h2>
+    <p><strong>mje</strong> does not include by default all identifiers and operators you can use with it. Here is some useful tables you can use to input identifiers and operators.</p>
+    <section class="tables-container">
+      <section class="tables-column">
+        <table>
+          <tr>
+            <th>Tex Command</th>
+            <th>Operator</th>
+          </tr>
+          <tr>
+            <td>+</td>
+            <td>+</td>
+          </tr>
+          <tr>
+            <td>-</td>
+            <td>-</td>
+          </tr>
+          <tr>
+            <td>=</td>
+            <td>=</td>
+          </tr>
+          <tr>
+            <td>&gt;</td>
+            <td>&gt;</td>
+          </tr>
+          <tr>
+            <td>&lt;</td>
+            <td>&lt;</td>
+          </tr>
+          <tr>
+            <td>|</td>
+            <td>|</td>
+          </tr>
+          <tr>
+            <td>%</td>
+            <td>%</td>
+          </tr>
+          <tr>
+            <td>,</td>
+            <td>,</td>
+          </tr>
+          <tr>
+            <td>.</td>
+            <td>.</td>
+          </tr>
+          <tr>
+            <td>$</td>
+            <td>$</td>
+          </tr>
+          <tr>
+            <td>(</td>
+            <td>(</td>
+          </tr>
+          <tr>
+            <td>)</td>
+            <td>)</td>
+          </tr>
+          <tr>
+            <td>[</td>
+            <td>[</td>
+          </tr>
+          <tr>
+            <td>]</td>
+            <td>]</td>
+          </tr>
+          <tr>
+            <td>!</td>
+            <td>!</td>
+          </tr>
+          <tr>
+            <td>\leq</td>
+            <td>≤</td>
+          </tr>
+          <tr>
+            <td>\geq</td>
+            <td>≥</td>
+          </tr>
+          <tr>
+            <td>\ll</td>
+            <td>≪</td>
+          </tr>
+          <tr>
+            <td>\gg</td>
+            <td>≫</td>
+          </tr>
+          <tr>
+            <td>\subset</td>
+            <td>⊂</td>
+          </tr>
+          <tr>
+            <td>\supset</td>
+            <td>⊃</td>
+          </tr>
+          <tr>
+            <td>\subseteq</td>
+            <td>⊆</td>
+          </tr>
+          <tr>
+            <td>\supseteq</td>
+            <td>⊇</td>
+          </tr>
+          <tr>
+            <td>\nsubseteq</td>
+            <td>⊈</td>
+          </tr>
+          <tr>
+            <td>\nsupseteq</td>
+            <td>⊉</td>
+          </tr>
+          <tr>
+            <td>\sqsubset</td>
+            <td>⊏</td>
+          </tr>
+          <tr>
+            <td>\sqsupset</td>
+            <td>⊐</td>
+          </tr>
+          <tr>
+            <td>\sqsubseteq</td>
+            <td>⊑</td>
+          </tr>
+          <tr>
+            <td>\sqsupseteq</td>
+            <td>⊒</td>
+          </tr>
+          <tr>
+            <td>\preceq</td>
+            <td>⪯</td>
+          </tr>
+          <tr>
+            <td>\succeq</td>
+            <td>⪰</td>
+          </tr>
+          <tr>
+            <td>\doteq</td>
+            <td>≐</td>
+          </tr>
+          <tr>
+            <td>\equiv</td>
+            <td>≡</td>
+          </tr>
+          <tr>
+            <td>\approx</td>
+            <td>≈</td>
+          </tr>
+          <tr>
+            <td>\cong</td>
+            <td>≅</td>
+          </tr>
+          <tr>
+            <td>\simeq</td>
+            <td>≃</td>
+          </tr>
+          <tr>
+            <td>\sim</td>
+            <td>∼</td>
+          </tr>
+          <tr>
+            <td>\propto</td>
+            <td>∝</td>
+          </tr>
+          <tr>
+            <td>\neq</td>
+            <td>≠</td>
+          </tr>
+          <tr>
+            <td>\parallel</td>
+            <td>∥</td>
+          </tr>
+          <tr>
+            <td>\asymp</td>
+            <td>≍</td>
+          </tr>
+          <tr>
+            <td>\vdash</td>
+            <td>⊢</td>
+          </tr>
+          <tr>
+            <td>\in</td>
+            <td>∈</td>
+          </tr>
+          <tr>
+            <td>\smile</td>
+            <td>⌣</td>
+          </tr>
+          <tr>
+            <td>\models</td>
+            <td>⊨</td>
+          </tr>
+          <tr>
+            <td>\perp</td>
+            <td>⊥</td>
+          </tr>
+          <tr>
+            <td>\prec</td>
+            <td>≺</td>
+          </tr>
+          <tr>
+            <td>\sphericalangle</td>
+            <td>∢</td>
+          </tr>
+          <tr>
+            <td>\nparallel</td>
+            <td>∦</td>
+          </tr>
+          <tr>
+            <td>\bowtie</td>
+            <td>⋈</td>
+          </tr>
+          <tr>
+            <td>\dashv</td>
+            <td>⊣</td>
+          </tr>
+          <tr>
+            <td>\ni</td>
+            <td>∋</td>
+          </tr>
+          <tr>
+            <td>\frown</td>
+            <td>⌢</td>
+          </tr>
+          <tr>
+            <td>\notin</td>
+            <td>∉</td>
+          </tr>
+          <tr>
+            <td>\mid</td>
+            <td>∣</td>
+          </tr>
+          <tr>
+            <td>\succ</td>
+            <td>≻</td>
+          </tr>
+          <tr>
+            <td>\measuredangle</td>
+            <td>∡</td>
+          </tr>
+          <tr>
+            <td>\pm</td>
+            <td>±</td>
+          </tr>
+          <tr>
+            <td>\div</td>
+            <td>÷</td>
+          </tr>
+          <tr>
+            <td>\times</td>
+            <td>×</td>
+          </tr>
+          <tr>
+            <td>\cdot</td>
+            <td>⋅</td>
+          </tr>
+          <tr>
+            <td>\mp</td>
+            <td>∓</td>
+          </tr>
+          <tr>
+            <td>\ast</td>
+            <td>∗</td>
+          </tr>
+          <tr>
+            <td>\star</td>
+            <td>⋆</td>
+          </tr>
+          <tr>
+            <td>\dagger</td>
+            <td>†</td>
+          </tr>
+          <tr>
+            <td>\ddagger</td>
+            <td>‡</td>
+          </tr>
+          <tr>
+            <td>\cap</td>
+            <td>∩</td>
+          </tr>
+          <tr>
+            <td>\cup</td>
+            <td>∪</td>
+          </tr>
+          <tr>
+            <td>\uplus</td>
+            <td>⊎</td>
+          </tr>
+          <tr>
+            <td>\sqcap</td>
+            <td>⊓</td>
+          </tr>
+          <tr>
+            <td>\sqcup</td>
+            <td>⊔</td>
+          </tr>
+          <tr>
+            <td>\vee</td>
+            <td>∨</td>
+          </tr>
+          <tr>
+            <td>\wedge</td>
+            <td>∧</td>
+          </tr>
+          <tr>
+            <td>\diamond</td>
+            <td>⋄</td>
+          </tr>
+          <tr>
+            <td>\bigtriangleup</td>
+            <td>△</td>
+          </tr>
+          <tr>
+            <td>\bigtriangledown</td>
+            <td>▽</td>
+          </tr>
+          <tr>
+            <td>\triangleleft</td>
+            <td>◃</td>
+          </tr>
+          <tr>
+            <td>\triangleright</td>
+            <td>▹</td>
+          </tr>
+          <tr>
+            <td>\bigcirc</td>
+            <td>◯</td>
+          </tr>
+          <tr>
+            <td>\bullet</td>
+            <td>∙</td>
+          </tr>
+          <tr>
+            <td>\wr</td>
+            <td>≀</td>
+          </tr>
+          <tr>
+            <td>\oplus</td>
+            <td>⊕</td>
+          </tr>
+          <tr>
+            <td>\ominus</td>
+            <td>⊖</td>
+          </tr>
+          <tr>
+            <td>\otimes</td>
+            <td>⊗</td>
+          </tr>
+          <tr>
+            <td>\odot</td>
+            <td>⊙</td>
+          </tr>
+          <tr>
+            <td>\circ</td>
+            <td>∘</td>
+          </tr>
+          <tr>
+            <td>\setminus</td>
+            <td>∖</td>
+          </tr>
+          <tr>
+            <td>\amalg</td>
+            <td>⨿</td>
+          </tr>
+          <tr>
+            <td>\exists</td>
+            <td>∃</td>
+          </tr>
+          <tr>
+            <td>\nexists</td>
+            <td>∄</td>
+          </tr>
+          <tr>
+            <td>\forall</td>
+            <td>∀</td>
+          </tr>
+          <tr>
+            <td>\neg</td>
+            <td>¬</td>
+          </tr>
+          <tr>
+            <td>\land</td>
+            <td>∧</td>
+          </tr>
+          <tr>
+            <td>\lor</td>
+            <td>∨</td>
+          </tr>
+          <tr>
+            <td>\rightarrow</td>
+            <td>→</td>
+          </tr>
+          <tr>
+            <td>\leftarrow</td>
+            <td>←</td>
+          </tr>
+          <tr>
+            <td>\mapsto</td>
+            <td>↦</td>
+          </tr>
+          <tr>
+            <td>\implies</td>
+            <td>⟹</td>
+          </tr>
+          <tr>
+            <td>\Rightarrow</td>
+            <td>⇒</td>
+          </tr>
+          <tr>
+            <td>\leftrightarrow</td>
+            <td>↔</td>
+          </tr>
+          <tr>
+            <td>\iff</td>
+            <td>⟺</td>
+          </tr>
+          <tr>
+            <td>\Leftrightarrow</td>
+            <td>⇔</td>
+          </tr>
+          <tr>
+            <td>\top</td>
+            <td>⊤</td>
+          </tr>
+          <tr>
+            <td>\bot</td>
+            <td>⊥</td>
+          </tr>
+          <tr>
+            <td>\emptyset</td>
+            <td>∅</td>
+          </tr>
+          <tr>
+            <td>\varnothing</td>
+            <td>∅</td>
+          </tr>
+          <tr>
+            <td>\{</td>
+            <td>{</td>
+          </tr>
+          <tr>
+            <td>\uparrow</td>
+            <td>↑</td>
+          </tr>
+          <tr>
+            <td>\downarrow</td>
+            <td>↓</td>
+          </tr>
+          <tr>
+            <td>\|</td>
+            <td>‖</td>
+          </tr>
+          <tr>
+            <td>\}</td>
+            <td>}</td>
+          </tr>
+          <tr>
+            <td>\Uparrow</td>
+            <td>⇑</td>
+          </tr>
+          <tr>
+            <td>\Downarrow</td>
+            <td>⇓</td>
+          </tr>
+          <tr>
+            <td>/</td>
+            <td>/</td>
+          </tr>
+          <tr>
+            <td>\angle</td>
+            <td>∠</td>
+          </tr>
+          <tr>
+            <td>\lceil</td>
+            <td>⌈</td>
+          </tr>
+          <tr>
+            <td>\lfloor</td>
+            <td>⌊</td>
+          </tr>
+          <tr>
+            <td>\backslash</td>
+            <td>∖</td>
+          </tr>
+          <tr>
+            <td>\rangle</td>
+            <td>⟩</td>
+          </tr>
+          <tr>
+            <td>\rceil</td>
+            <td>⌉</td>
+          </tr>
+          <tr>
+            <td>\rfloor</td>
+            <td>⌋</td>
+          </tr>
+        </table>
+      </section>
+      <section class="tables-column">
+        <table>
+          <tr>
+            <th>Tex Command</th>
+            <th>Identifier</th>
+          </tr>
+          <tr>
+            <td>\sin</td>
+            <td>sin</td>
+          </tr>
+          <tr>
+            <td>\cos</td>
+            <td>cos</td>
+          </tr>
+          <tr>
+            <td>\tan</td>
+            <td>tan</td>
+          </tr>
+          <tr>
+            <td>\cot</td>
+            <td>cot</td>
+          </tr>
+          <tr>
+            <td>\arcsin</td>
+            <td>arcsin</td>
+          </tr>
+          <tr>
+            <td>\arccos</td>
+            <td>arccos</td>
+          </tr>
+          <tr>
+            <td>\arctan</td>
+            <td>arctan</td>
+          </tr>
+          <tr>
+            <td>\arccot</td>
+            <td>arccot</td>
+          </tr>
+          <tr>
+            <td>\sinh</td>
+            <td>sinh</td>
+          </tr>
+          <tr>
+            <td>\cosh</td>
+            <td>cosh</td>
+          </tr>
+          <tr>
+            <td>\tanh</td>
+            <td>tanh</td>
+          </tr>
+          <tr>
+            <td>\coth</td>
+            <td>coth</td>
+          </tr>
+          <tr>
+            <td>\sec</td>
+            <td>sec</td>
+          </tr>
+          <tr>
+            <td>\csc</td>
+            <td>csc</td>
+          </tr>
+          <tr>
+            <td>\alpha</td>
+            <td>α</td>
+          </tr>
+          <tr>
+            <td>\beta</td>
+            <td>β</td>
+          </tr>
+          <tr>
+            <td>\gamma</td>
+            <td>γ</td>
+          </tr>
+          <tr>
+            <td>\Gamma</td>
+            <td>Γ</td>
+          </tr>
+          <tr>
+            <td>\delta</td>
+            <td>δ</td>
+          </tr>
+          <tr>
+            <td>\Delta</td>
+            <td>Δ</td>
+          </tr>
+          <tr>
+            <td>\epsilon</td>
+            <td>ϵ</td>
+          </tr>
+          <tr>
+            <td>\varepsilon</td>
+            <td>ε</td>
+          </tr>
+          <tr>
+            <td>\zeta</td>
+            <td>ζ</td>
+          </tr>
+          <tr>
+            <td>\eta</td>
+            <td>η</td>
+          </tr>
+          <tr>
+            <td>\theta</td>
+            <td>θ</td>
+          </tr>
+          <tr>
+            <td>\vartheta</td>
+            <td>ϑ</td>
+          </tr>
+          <tr>
+            <td>\Theta</td>
+            <td>Θ</td>
+          </tr>
+          <tr>
+            <td>\iota</td>
+            <td>ι</td>
+          </tr>
+          <tr>
+            <td>\kappa</td>
+            <td>κ</td>
+          </tr>
+          <tr>
+            <td>\Lambda</td>
+            <td>Λ</td>
+          </tr>
+          <tr>
+            <td>\lambda</td>
+            <td>λ</td>
+          </tr>
+          <tr>
+            <td>\mu</td>
+            <td>μ</td>
+          </tr>
+          <tr>
+            <td>\nu</td>
+            <td>ν</td>
+          </tr>
+          <tr>
+            <td>\xi</td>
+            <td>ξ</td>
+          </tr>
+          <tr>
+            <td>\Xi</td>
+            <td>Ξ</td>
+          </tr>
+          <tr>
+            <td>\pi</td>
+            <td>π</td>
+          </tr>
+          <tr>
+            <td>\Pi</td>
+            <td>Π</td>
+          </tr>
+          <tr>
+            <td>\rho</td>
+            <td>ρ</td>
+          </tr>
+          <tr>
+            <td>\varrho</td>
+            <td>ϱ</td>
+          </tr>
+          <tr>
+            <td>\sigma</td>
+            <td>σ</td>
+          </tr>
+          <tr>
+            <td>\Sigma</td>
+            <td>Σ</td>
+          </tr>
+          <tr>
+            <td>\tau</td>
+            <td>τ</td>
+          </tr>
+          <tr>
+            <td>\upsilon</td>
+            <td>υ</td>
+          </tr>
+          <tr>
+            <td>\Upsilon</td>
+            <td>Υ</td>
+          </tr>
+          <tr>
+            <td>\phi</td>
+            <td>ϕ</td>
+          </tr>
+          <tr>
+            <td>\varphi</td>
+            <td>φ</td>
+          </tr>
+          <tr>
+            <td>\Phi</td>
+            <td>Φ</td>
+          </tr>
+          <tr>
+            <td>\chi</td>
+            <td>χ</td>
+          </tr>
+          <tr>
+            <td>\psi</td>
+            <td>ψ</td>
+          </tr>
+          <tr>
+            <td>\Psi</td>
+            <td>Ψ</td>
+          </tr>
+          <tr>
+            <td>\omega</td>
+            <td>ω</td>
+          </tr>
+          <tr>
+            <td>\Omega</td>
+            <td>Ω</td>
+          </tr>
+          <tr>
+            <td>\partial</td>
+            <td>∂</td>
+          </tr>
+          <tr>
+            <td>\eth</td>
+            <td>ð</td>
+          </tr>
+          <tr>
+            <td>\hbar</td>
+            <td>ℏ</td>
+          </tr>
+          <tr>
+            <td>\imath</td>
+            <td>ı</td>
+          </tr>
+          <tr>
+            <td>\jmath</td>
+            <td>ȷ</td>
+          </tr>
+          <tr>
+            <td>\ell</td>
+            <td>ℓ</td>
+          </tr>
+          <tr>
+            <td>\Re</td>
+            <td>ℜ</td>
+          </tr>
+          <tr>
+            <td>\Im</td>
+            <td>ℑ</td>
+          </tr>
+          <tr>
+            <td>\wp</td>
+            <td>℘</td>
+          </tr>
+          <tr>
+            <td>\nabla</td>
+            <td>∇</td>
+          </tr>
+          <tr>
+            <td>\infty</td>
+            <td>∞</td>
+          </tr>
+          <tr>
+            <td>\aleph</td>
+            <td>ℵ</td>
+          </tr>
+          <tr>
+            <td>\beth</td>
+            <td>ℶ</td>
+          </tr>
+          <tr>
+            <td>\gimel</td>
+            <td>ℷ</td>
+          </tr>
+        </table>
+      </section>
+    </section>
+  </section>
   <script type='text/x-mathjax-config'>
     MathJax.Hub.Config({
       showMathMenu: false,
       messageStyle: 'none'
     });
   </script>
-
-  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/7.4.4/polyfill.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/prism.min.js"></script>
-  <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
-  <script src="https://rawgit.com/ianlucas/mathjax-editor/next/dist/MathJaxEditor.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+  <script src="mje.js?v=3.0.0"></script>
   <script src="scripts.js"></script>
 </body>
 </html>

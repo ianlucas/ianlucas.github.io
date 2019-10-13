@@ -1,88 +1,78 @@
-* {
-  box-sizing: border-box;
-}
-
-html,
-body {
-  margin: 0;
-  padding: 0;
+html {
+  margin: 0 15%;
+  margin-bottom: 2em;
 }
 
 body {
-  background-color: #f1f1f1;
   color: #333;
-  font-family: "Open Sans", sans-serif;
-  font-size: 16px;
-  line-height: 1.4;
+  font-family: 'Nunito', sans-serif;
+  line-height: 1.5;
 }
 
 h2 {
-  color: #13a10e;
-  font-size: 18px;
-  margin: 0 0 0.5em 0;
+  color: #007fff;
+  font-weight: normal;
 }
 
-h3 {
-  font-size: 16px;
+pre, code {
+  background-color: #f1f1f1;
+  padding: 0.5em 0;
 }
 
 a {
-  color: #13a10e;
+  color: #007fff;
   text-decoration: none;
 }
 
-hr {
-  border: none;
-  padding: 0.5em;
-}
-
-article {
-  padding: 2em;
-}
-
-code {
-  color: #000;
-}
-
-p:last-child {
-  margin-bottom: 0;
-}
-
-.wrapper {
-  background-color: #fff;
-  margin: 2em auto;
-  width: 800px;
-}
-
-.header {
-  background-color: #333;
-  color: #fff;
-  padding: 2em;
-}
-
-.header-title {
-  font-size: 24px;
+#header {
+  color: #fd3f92;
+  font-size: 128px;
+  font-weight: normal;
   margin: 0;
-  margin-bottom: 2em;
-  padding: 0;
+}
+
+#equation-wrapper {
+  font-size: 48px;
+}
+
+.api-container {
+  overflow: hidden;
+}
+
+.api-container,
+.api-container h3 {
+  font-size: 14px;
+}
+
+.api-column {
+  float: left;
+  width: 33.333%;
+}
+
+.api-column h3:first-of-type {
+  margin-top: 0;
+}
+
+.tables-container {
+  overflow: hidden;
+}
+
+.tables-column {
+  float: left;
+  width: 50%;
+}
+
+.tables-column table {
+  width: 100%;
+}
+
+.tables-column td,
+.tables-column th {
   text-align: center;
 }
 
-.header-title iframe {
-  vertical-align: middle;
-}
-
-.mathjax-editor-display {
-  background-color: transparent !important;
-  font-size: 32px;
-  text-align: center;
-}
-
-.mathjax-editor-caret {
-  background-color: #fff !important;
-}
-
-.npm {
-  margin: 2em 0;
-  text-align: center;
+.upwards {
+  height: 32px;
+  margin-left: 5px;
+  vertical-align: text-bottom;
 }
